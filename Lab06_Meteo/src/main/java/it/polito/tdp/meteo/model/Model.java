@@ -42,6 +42,7 @@ public class Model {
 	
 	// of course you can change the String output with what you think works best
 	public String trovaSequenza(int mese) {
+		List<Rilevamento> list = meteoDao.getAllRilevamentiMese(mese);
 		return "TODO!";
 	}
 	

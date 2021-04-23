@@ -64,11 +64,41 @@ public class MeteoDAO {
 		//LocalDate first = ym.atDay(1);
 		// loop through the days
 		for(Rilevamento r : getAllRilevamenti()) {
-			if(r.getLocalita().equals("Genova")) {
+			if(r.getLocalita().equals(localita)) {
 				LocalDate data = new java.sql.Date( r.getData().getTime()).toLocalDate();
 				if(data.isAfter(primo)&&data.isBefore(ultimo)) {
 					rilevamenti.add(r);
 				}
+			}
+		}
+	    return rilevamenti;
+	}
+	public List<Rilevamento> getAllRilevamentiMese(int mese) {
+		List<Rilevamento> rilevamenti = new ArrayList<Rilevamento>();
+		YearMonth ym;
+		if(mese==1) {
+			ym = YearMonth.of(2012, 12);
+		}else {
+			ym = YearMonth.of(2013, mese-1);
+		}
+		YearMonth ym1; 
+		if(mese==12) {
+			ym1=YearMonth.of(2014,1);
+		}else {
+			ym1 = YearMonth.of(2013, mese+1);
+		}
+		
+		// get the last day of month
+		int lastDay = ym.lengthOfMonth();
+		 LocalDate primo = ym.atDay(lastDay);
+		 LocalDate ultimo = ym1.atDay(1);
+		//LocalDate first = ym.atDay(1);
+		// loop through the days
+		for(Rilevamento r : getAllRilevamenti()) {
+			LocalDate data = new java.sql.Date( r.getData().getTime()).toLocalDate();
+				if(data.isAfter(primo)&&data.isBefore(ultimo)) {
+					rilevamenti.add(r);
+				
 			}
 		}
 	    return rilevamenti;
